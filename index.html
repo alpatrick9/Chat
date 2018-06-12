@@ -5,7 +5,7 @@
 	</head>
 	<body>
 		<h1>Chat lite</h1>
-		<form>
+		<form id="form" method="post">
 			<table>
 				<tr>
 					<td>Pseudo:</td>
@@ -20,5 +20,51 @@
 				</tr>
 			</table>
 		<form>
+		<table class="list-message"></table>
+
+		<script>
+
+			var data = getData();
+
+			setDataToTable(data);
+
+			function setDataToTable(data) {
+				
+				data.map(function(element){
+					appendTable(element.pseudo, element.message);
+				});
+			}
+
+			function appendTable(pseudo, message) {
+				var tableMessage = $(".list-message");
+				content = '<tr><td>Pseudo:'+ pseudo +'<br> message '+ message +'</td></tr>';
+				tableMessage.append(content);
+			}
+
+			function getData() {
+				return JSON.parse(localStorage.getItem("messages"));
+			}
+
+			function setData(data) {
+				localStorage.setItem("messages", JSON.stringify(data));
+			}
+
+			function addItemData(pseudo, message) {
+				var item = {
+					"pseudo": pseudo,
+					"message": message
+				}
+				var dataTemp = getData();
+				dataTemp.push(item);
+				setData(dataTemp);
+				appendTable(pseudo, message);
+			}
+
+			$("#form").submit(function() {
+				var pseudo = $("#pseudo").val();
+				var message = $("#message").val();
+				addItemData(pseudo, message);
+			});
+		</script>
 	</body>
 </html>
