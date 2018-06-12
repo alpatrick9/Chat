@@ -1,0 +1,120 @@
+<html>
+	<head>
+		<title>Tchat lite</title>
+		
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+ 		<style>
+ 			body {
+ 				background: grey;
+ 			}
+
+ 			.wrapper {
+ 				width: 75%;
+ 				background: #fff;
+ 				margin: auto;
+ 			}
+
+ 			.header {
+ 				text-align: center;
+ 			}
+
+ 			#form .row {
+ 				margin-bottom: 5px !important;
+ 			}
+
+ 			#form input {
+ 				width: 50%;
+ 				margin: auto;
+ 			}
+
+ 			.list-message {
+ 				width: 75%;
+ 				margin: auto;
+ 			}
+
+ 			.item {
+ 				border: solid 1px black;
+ 				border-radius: 5px;
+ 				margin-bottom: 5px;
+ 				padding: 5px
+ 			}
+ 		</style>
+	</head>
+	<body>
+		<div class="wrapper">
+			<div class="header">
+				<h1>Chat lite</h1>
+				<form id="form" method="post">
+					<div class="row">
+						<div class="form-group">
+							<label>Pseudo: </label>
+							<input type="text" name="pseudo" id="pseudo" class="form-control" required="required">
+						</div>
+					</div>
+					<div class="row">
+						<div class="form-group">
+							<label>message: </label>
+							<input type="text" name="message" id="message" class="form-control" required="required">
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<input type="submit" name="submit" value="Envoyer" class="btn btn-primary">
+					</div>
+				<form>
+			</div>
+			<div class="content">
+				<div class="list-message"></div>
+			</div>
+		</div>
+		
+		
+
+		<script>
+
+			var data = getData();
+
+			setDataToTable(data);
+
+			function setDataToTable(data) {
+				
+				data.map(function(element){
+					appendTable(element.pseudo, element.message);
+				});
+			}
+
+			function appendTable(pseudo, message) {
+				var tableMessage = $(".list-message");
+				content = '<div class="item">De '+ pseudo +':<p>'+ message +'</p></div>';
+				tableMessage.append(content);
+			}
+
+			function getData() {
+				return JSON.parse(localStorage.getItem("messages"));
+			}
+
+			function setData(data) {
+				localStorage.setItem("messages", JSON.stringify(data));
+			}
+
+			function addItemData(pseudo, message) {
+				var item = {
+					"pseudo": pseudo,
+					"message": message
+				}
+				var dataTemp = getData();
+				dataTemp.push(item);
+				setData(dataTemp);
+				appendTable(pseudo, message);
+			}
+
+			$("#form").submit(function() {
+				var pseudo = $("#pseudo").val();
+				var message = $("#message").val();
+				addItemData(pseudo, message);
+			});
+		</script>
+	</body>
+</html>
