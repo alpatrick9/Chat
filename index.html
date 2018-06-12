@@ -1,26 +1,76 @@
 <html>
 	<head>
 		<title>Tchat lite</title>
+		
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+ 		<style>
+ 			body {
+ 				background: grey;
+ 			}
+
+ 			.wrapper {
+ 				width: 75%;
+ 				background: #fff;
+ 				margin: auto;
+ 			}
+
+ 			.header {
+ 				text-align: center;
+ 			}
+
+ 			#form .row {
+ 				margin-bottom: 5px !important;
+ 			}
+
+ 			#form input {
+ 				width: 50%;
+ 				margin: auto;
+ 			}
+
+ 			.list-message {
+ 				width: 75%;
+ 				margin: auto;
+ 			}
+
+ 			.item {
+ 				border: solid 1px black;
+ 				border-radius: 5px;
+ 				margin-bottom: 5px;
+ 				padding: 5px
+ 			}
+ 		</style>
 	</head>
 	<body>
-		<h1>Chat lite</h1>
-		<form id="form" method="post">
-			<table>
-				<tr>
-					<td>Pseudo:</td>
-					<td><input type="text" name="pseudo" id="pseudo">
-				</tr>
-				<tr>
-					<td>Message</td>
-					<td><input type="text" name="message" id="message">
-				</tr>
-				<tr>
-					<td colspan="2"><input type="submit" name="submit" value="Envoyer"></td>
-				</tr>
-			</table>
-		<form>
-		<table class="list-message"></table>
+		<div class="wrapper">
+			<div class="header">
+				<h1>Chat lite</h1>
+				<form id="form" method="post">
+					<div class="row">
+						<div class="form-group">
+							<label>Pseudo: </label>
+							<input type="text" name="pseudo" id="pseudo" class="form-control" required="required">
+						</div>
+					</div>
+					<div class="row">
+						<div class="form-group">
+							<label>message: </label>
+							<input type="text" name="message" id="message" class="form-control" required="required">
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<input type="submit" name="submit" value="Envoyer" class="btn btn-primary">
+					</div>
+				<form>
+			</div>
+			<div class="content">
+				<div class="list-message"></div>
+			</div>
+		</div>
+		
+		
 
 		<script>
 
@@ -37,7 +87,7 @@
 
 			function appendTable(pseudo, message) {
 				var tableMessage = $(".list-message");
-				content = '<tr><td>Pseudo:'+ pseudo +'<br> message '+ message +'</td></tr>';
+				content = '<div class="item">De '+ pseudo +':<p>'+ message +'</p></div>';
 				tableMessage.append(content);
 			}
 
